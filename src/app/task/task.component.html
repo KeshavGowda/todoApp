@@ -1,0 +1,40 @@
+<div class="maincomponent container">
+    <div>
+        <label for="desc" style="margin-left: 1%;"><h4>New Task:</h4></label>
+        <input type="text" #desc name="desc" maxlength="40" placeholder="Description" 
+            class="textarea" [(ngModel)]='taskDesc'>
+        <button class="btn btn-outline-primary btn-sm" style="margin-left: 1%;" (click)="createNewTask(desc.value)" [disabled]="taskDesc === ''">
+            Create
+        </button>
+    </div>
+    <div class="taskdiv card border-warning">
+        <div class="card-header" style="background-color: rgb(234, 238, 16);">
+            <h6>Pending</h6>
+        </div>
+        <div style="overflow-y: scroll;">
+            <div *ngIf="openTasks.size === 0" style="text-align: center"> 
+               No Open Tasks
+            </div>
+            <li class="list-group-item" *ngFor="let task of openTasks | keyvalue">
+                <input type="checkbox" name={{task.key}} value={{task.key}} (click)="moveToCompleted(task.key)">
+                <label for={{task.key}} style="margin-left: 1%;">{{task.value}}</label>
+                <button type="button" class="btn btn-danger btn-sm" style="float: right" (click)="deleteTask(task.key)">delete</button>
+            </li>
+        </div>
+    </div>
+    <div class="compldiv card border-success">
+        <div class="card-header" style="background-color: rgb(112, 173, 13);">
+            <h6>Completed</h6>
+        </div>
+        <div style="overflow-y: scroll;">
+            <div *ngIf="completedTasks.size === 0" style="text-align: center;">
+                No Completed Tasks
+            </div>
+            <li class="list-group-item" *ngFor="let task of completedTasks | keyvalue">
+                <input type="checkbox" name={{task.key}} value={{task.key}} checked="true" (click)="moveToOpen(task.key)">
+                <label for={{task.key}} style="margin-left: 1%;">{{task.value}}</label>
+                <button type="button" class="btn btn-danger btn-sm" style="float: right" (click)="deleteTask(task.key)">delete</button>
+            </li>
+        </div>
+    </div>
+</div>
